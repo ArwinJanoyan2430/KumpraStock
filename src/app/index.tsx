@@ -1,98 +1,136 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+  Image,
+} from "react-native";
+import { router } from "expo-router";
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#2563EB" />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <View style={styles.content}>
+        <View style={styles.logoContainer}>
+          <Image source={require("../../assets/asd.png")} style={styles.logo} />
+        </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        <Text style={styles.title}>KumpraStock</Text>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        <Text style={styles.tagline}>Smart Grocery Purchase Tracker</Text>
+
+        <Text style={styles.subtitle}>
+          Organize every grocery purchase, monitor expenses, and keep accurate
+          records for your sari-sari store—all in one simple app.
+        </Text>
+
+        <TouchableOpacity
+          style={styles.button}
+          activeOpacity={0.9}
+          onPress={() => router.push("/pos")}
+        >
+          <Text style={styles.buttonText}>Get Started</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.footerContainer}>
+        <Text style={styles.credit}>Made by Arwin Janoyan</Text>
+        <Text style={styles.footer}>KUMPRASTOCK • Version 1.0</Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: "#2563EB",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 30,
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+
+  content: {
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderRadius: 28,
+    paddingVertical: 40,
+    paddingHorizontal: 24,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  logoContainer: {
+    width: 250,
+    height: 200,
+    borderRadius: 80,
+    backgroundColor: "#FFFFFF",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 24,
   },
+
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+  },
+
   title: {
-    textAlign: 'center',
+    fontSize: 36,
+    fontWeight: "900",
+    color: "#FFFFFF",
+    letterSpacing: 1,
   },
-  code: {
-    textTransform: 'uppercase',
+
+  tagline: {
+    marginTop: 8,
+    fontSize: 17,
+    color: "#BFDBFE",
+    fontWeight: "600",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  subtitle: {
+    marginTop: 20,
+    color: "#E5F0FF",
+    fontSize: 16,
+    textAlign: "center",
+    lineHeight: 26,
+    maxWidth: 320,
+  },
+
+  button: {
+    marginTop: 35,
+    width: "100%",
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 17,
+    borderRadius: 16,
+    alignItems: "center",
+    elevation: 6,
+  },
+
+  buttonText: {
+    color: "#2563EB",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
+  footerContainer: {
+    position: "absolute",
+    bottom: 25,
+    alignItems: "center",
+  },
+
+  credit: {
+    color: "#DBEAFE",
+    fontSize: 14,
+  },
+
+  footer: {
+    color: "#BFDBFE",
+    fontSize: 12,
+    marginTop: 2,
   },
 });
