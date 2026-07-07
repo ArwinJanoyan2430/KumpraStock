@@ -42,6 +42,12 @@
       "eas": {
         "projectId": "50bc6c9b-b567-4ca1-989e-57d69cf56e7e"
       }
+    },
+
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/logo.png"
     }
   }
 }

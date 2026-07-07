@@ -7,8 +7,18 @@ import {
   Image,
 } from "react-native";
 import { router } from "expo-router";
+import { useEffect } from "react";
 
 export default function HomeScreen() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("PWA Offline Ready"))
+        .catch(console.error);
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#2563EB" />
