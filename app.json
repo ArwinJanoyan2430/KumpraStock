@@ -7,6 +7,7 @@
     "icon": "./assets/logo.png",
     "scheme": "kstock",
     "userInterfaceStyle": "automatic",
+
     "ios": {
       "bundleIdentifier": "com.arwinjanoyan.kumprastock",
       "supportsTablet": true,
@@ -14,6 +15,7 @@
         "ITSAppUsesNonExemptEncryption": false
       }
     },
+
     "android": {
       "package": "com.arwinjanoyan.kumprastock",
       "adaptiveIcon": {
@@ -22,6 +24,7 @@
       },
       "predictiveBackGestureEnabled": false
     },
+
     "plugins": [
       "expo-router",
       [
@@ -33,6 +36,7 @@
         }
       ]
     ],
+
     "extra": {
       "router": {},
       "eas": {
