@@ -4,25 +4,26 @@
     "slug": "kstock",
     "version": "1.0.0",
     "orientation": "portrait",
-
     "icon": "./assets/logo.png",
-
     "scheme": "kstock",
-
+    "userInterfaceStyle": "automatic",
     "ios": {
       "bundleIdentifier": "com.arwinjanoyan.kumprastock",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
-
     "android": {
       "package": "com.arwinjanoyan.kumprastock",
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#E6F4FE"
-      }
+      },
+      "predictiveBackGestureEnabled": false
     },
-
     "plugins": [
+      "expo-router",
       [
         "expo-splash-screen",
         {
@@ -30,8 +31,13 @@
           "image": "./assets/logo.png",
           "imageWidth": 180
         }
-      ],
-      "expo-router"
-    ]
+      ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "50bc6c9b-b567-4ca1-989e-57d69cf56e7e"
+      }
+    }
   }
 }
