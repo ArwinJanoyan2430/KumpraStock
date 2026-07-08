@@ -51,6 +51,23 @@ export default function POS() {
   const removeProduct = (id: string) => {
     setProducts(products.filter((item) => item.id !== id));
   };
+  const increaseQuantity = (id: string) => {
+    setProducts((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+      ),
+    );
+  };
+
+  const decreaseQuantity = (id: string) => {
+    setProducts((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item,
+        )
+        .filter((item) => item.quantity > 0),
+    );
+  };
   const addProduct = () => {
     const productPrice = Number(price);
     const productQuantity = Number(quantity);
@@ -97,10 +114,18 @@ export default function POS() {
         <Text style={styles.title}>KUMPRASTOCK</Text>
 
         <TouchableOpacity
-          style={styles.historyButton}
+          style={[
+            styles.historyButton,
+            products.length > 0 && styles.historyButtonDisabled,
+          ]}
+          disabled={products.length > 0}
           onPress={() => router.push("/history")}
         >
-          <MaterialIcons name="history" size={25} color="#2563EB" />
+          <MaterialIcons
+            name="history"
+            size={25}
+            color={products.length > 0 ? "#9CA3AF" : "#2563EB"}
+          />
         </TouchableOpacity>
       </View>
 
@@ -115,7 +140,7 @@ export default function POS() {
 
       <View style={styles.inputRow}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.priceInput]}
           placeholder="Price"
           keyboardType="numeric"
           value={price}
@@ -149,9 +174,23 @@ export default function POS() {
             <View style={{ flex: 1 }}>
               <Text style={styles.product}>{item.name}</Text>
 
-              <Text style={{ color: "#6B7280", marginTop: 2, fontSize: 12,  }}>
-                Qty: {item.quantity}
-              </Text>
+              <View style={styles.quantityRow}>
+                <TouchableOpacity
+                  style={styles.qtyButton}
+                  onPress={() => decreaseQuantity(item.id)}
+                >
+                  <MaterialIcons name="remove" size={16} color="#FFFFFF" />
+                </TouchableOpacity>
+
+                <Text style={styles.qtyText}>{item.quantity}</Text>
+
+                <TouchableOpacity
+                  style={styles.qtyButton}
+                  onPress={() => increaseQuantity(item.id)}
+                >
+                  <MaterialIcons name="add" size={16} color="#FFFFFF" />
+                </TouchableOpacity>
+              </View>
             </View>
 
             <View style={{ alignItems: "flex-end", marginRight: 15 }}>
@@ -159,13 +198,18 @@ export default function POS() {
                 ₱{(item.price * item.quantity).toFixed(2)}
               </Text>
 
-              <Text style={{ color: "#6B7280", fontSize: 12,  }}>
+              <Text style={{ color: "#6B7280", fontSize: 12 }}>
                 ₱{item.price.toFixed(2)} each
               </Text>
             </View>
 
             <TouchableOpacity onPress={() => removeProduct(item.id)}>
-              <MaterialIcons name="delete" size={26} style={{padding: 6, borderRadius: 6,}} color="red" />
+              <MaterialIcons
+                name="delete"
+                size={26}
+                style={{ padding: 6, borderRadius: 6 }}
+                color="red"
+              />
             </TouchableOpacity>
           </View>
         )}
@@ -220,7 +264,7 @@ export default function POS() {
                   <View>
                     <Text style={styles.receiptProduct}>{item.name}</Text>
 
-                    <Text style={{ color: "#6B7280", fontSize: 12, }}>
+                    <Text style={{ color: "#6B7280", fontSize: 12 }}>
                       Qty: {item.quantity}
                     </Text>
                   </View>
@@ -359,8 +403,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
+  },
+
+  priceInput: {
+    flex: 2,
   },
 
   quantityInput: {
@@ -521,6 +568,7 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 16,
     backgroundColor: "#ff2f2f",
+    justifyContent: "center",
     alignItems: "center",
   },
 
@@ -552,5 +600,34 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "800",
+  },
+  quantityRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
+
+  qtyButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 8,
+    backgroundColor: "#8b8b8b",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  qtyText: {
+    marginHorizontal: 12,
+    fontSize: 13,
+    fontWeight: "700",
+    minWidth: 0,
+    textAlign: "center",
+  },
+
+  historyButtonDisabled: {
+    backgroundColor: "#F3F4F6",
+    shadowOpacity: 0,
+    elevation: 0,
+    opacity: 0.7,
   },
 });

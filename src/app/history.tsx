@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
-  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -99,7 +98,7 @@ export default function History() {
                 <Text style={styles.date}>{item.date}</Text>
 
                 <Text style={styles.productCount}>
-                  📦 {item.products.length} Products
+                  {item.products.length} Products
                 </Text>
               </View>
 
@@ -125,7 +124,7 @@ export default function History() {
                     setShowTransaction(true);
                   }}
                 >
-                  <Text style={styles.viewText}>👁 View</Text>
+                  <Text style={styles.viewText}>View</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -142,7 +141,7 @@ export default function History() {
           </TouchableOpacity>
         )}
       />
-      <Modal visible={showTransaction} transparent animationType="slide">
+      <Modal visible={showTransaction} transparent animationType="none">
         <View style={styles.overlay}>
           <View style={styles.modalCard}>
             <Text style={styles.modalTitle}>Transaction Details</Text>
@@ -185,32 +184,36 @@ export default function History() {
       <Modal visible={deleteModalVisible} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.deleteModal}>
-            <Text style={styles.warningIcon}>⚠️</Text>
+            <View style={styles.warningBanner}>
+              <Text style={styles.warningBannerText}>⚠ WARNING</Text>
+            </View>
 
-            <Text style={styles.deleteTitle}>Delete Transaction?</Text>
+            <View style={styles.deleteContent}>
+              <Text style={styles.deleteTitle}>Delete Transaction?</Text>
 
-            <Text style={styles.deleteMessage}>
-              This transaction will be permanently removed from your purchase
-              history. This action cannot be undone.
-            </Text>
+              <Text style={styles.deleteMessage}>
+                This transaction will be permanently removed from your purchase
+                history. This action cannot be undone.
+              </Text>
 
-            <View style={styles.deleteButtons}>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => {
-                  setDeleteModalVisible(false);
-                  setSelectedDeleteId(null);
-                }}
-              >
-                <Text style={styles.cancelText}>Cancel</Text>
-              </TouchableOpacity>
+              <View style={styles.deleteButtons}>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={() => {
+                    setDeleteModalVisible(false);
+                    setSelectedDeleteId(null);
+                  }}
+                >
+                  <Text style={styles.cancelText}>Cancel</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.confirmDeleteButton}
-                onPress={confirmDelete}
-              >
-                <Text style={styles.confirmDeleteText}>Delete</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.confirmDeleteButton}
+                  onPress={confirmDelete}
+                >
+                  <Text style={styles.confirmDeleteText}>Delete</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
@@ -266,7 +269,6 @@ const styles = StyleSheet.create({
   backIcon: {
     fontSize: 45,
     color: "#2563EB",
-    marginTop: -15,
   },
 
   title: {
@@ -466,24 +468,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  deleteModal: {
-    width: "85%",
-    backgroundColor: "#FFF",
-    borderRadius: 22,
-    padding: 25,
-    alignItems: "center",
-
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    elevation: 10,
-  },
-
-  warningIcon: {
-    fontSize: 55,
-    marginBottom: 15,
-  },
-
   deleteTitle: {
     fontSize: 23,
     fontWeight: "900",
@@ -500,17 +484,27 @@ const styles = StyleSheet.create({
 
   deleteButtons: {
     flexDirection: "row",
+    width: "100%",
+    gap: 12,
     marginTop: 28,
   },
 
   cancelButton: {
     flex: 1,
+    height: 50,
     backgroundColor: "#E5E7EB",
-    paddingVertical: 14,
     borderRadius: 12,
+    justifyContent: "center",
     alignItems: "center",
-    marginRight: 10,
-    paddingHorizontal: 50,
+  },
+
+  confirmDeleteButton: {
+    flex: 1,
+    height: 50,
+    backgroundColor: "#DC2626",
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   cancelText: {
@@ -519,18 +513,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  confirmDeleteButton: {
-    flex: 1,
-    backgroundColor: "#DC2626",
-    paddingVertical: 14,
-    paddingHorizontal: 50,
-    borderRadius: 12,
-    alignItems: "center",
-  },
-
   confirmDeleteText: {
     color: "#FFF",
     fontWeight: "700",
     fontSize: 16,
+  },
+
+  deleteModal: {
+    width: "85%",
+    backgroundColor: "#FFF",
+    borderRadius: 22,
+    overflow: "hidden", // important
+  },
+
+  warningBanner: {
+    backgroundColor: "#DC2626",
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  warningBannerText: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "900",
+    letterSpacing: 1,
+  },
+
+  deleteContent: {
+    padding: 25,
+    alignItems: "center",
   },
 });
