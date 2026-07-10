@@ -63,7 +63,9 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.footerText}>© 2026 Arwin Janoyan</Text>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>© 2026 Arwin Janoyan</Text>
+      </View>
     </View>
   );
 }
@@ -182,7 +184,9 @@ const styles = StyleSheet.create({
   },
 
   footerText: {
-    color: "#DBEAFE",
-    fontSize: 14,
+    color: "#E0F2FE",
+    fontSize: 13,
+    fontWeight: "600",
+    letterSpacing: 1,
   },
 });
