@@ -1,44 +1,39 @@
 const CACHE_NAME = "kumpra-stock-v1";
 
 self.addEventListener("install", (event) => {
-  console.log("Service Worker installing");
-
   self.skipWaiting();
 });
 
-
 self.addEventListener("activate", (event) => {
-  console.log("Service Worker activated");
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        }),
+      ),
+    ),
+  );
 
-  event.waitUntil(self.clients.claim());
+  self.clients.claim();
 });
 
-
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
   event.respondWith(
-    caches.match(event.request)
-      .then((cached) => {
+    fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
 
-        if (cached) {
-          return cached;
-        }
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, copy);
+        });
 
-        return fetch(event.request)
-          .then((response) => {
-
-            const clone = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, clone);
-              });
-
-            return response;
-          })
-          .catch(() => {
-            return caches.match("/");
-          });
-
+        return response;
       })
+      .catch(() => caches.match(event.request)),
   );
 });
