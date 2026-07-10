@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function History() {
   const [history, setHistory] = useState<any[]>([]);
@@ -56,7 +57,7 @@ export default function History() {
   const totalSpent = history.reduce((sum, item) => sum + item.total, 0);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>PURCHASE HISTORY</Text>
@@ -218,14 +219,14 @@ export default function History() {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4F6F9",
+    backgroundColor: "#ffffff",
     padding: 20,
     paddingTop: 20,
   },

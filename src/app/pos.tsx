@@ -13,6 +13,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function POS() {
   const [productName, setProductName] = useState("");
@@ -140,7 +141,7 @@ export default function POS() {
   const change = Number(cash) - total;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <View style={styles.titleRow}>
         <Text style={styles.title}>KUMPRASTOCK</Text>
 
@@ -359,14 +360,14 @@ export default function POS() {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4F6F9",
+    backgroundColor: "#ffffff",
     padding: 20,
     paddingTop: 20,
   },

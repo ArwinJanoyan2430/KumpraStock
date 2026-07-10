@@ -10,6 +10,7 @@ import {
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <StatusBar barStyle="light-content" backgroundColor="#2563EB" />
 
       <View style={styles.card}>
@@ -66,7 +67,7 @@ export default function HomeScreen() {
       <View style={styles.footer}>
         <Text style={styles.footerText}>© 2026 Arwin Janoyan</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
