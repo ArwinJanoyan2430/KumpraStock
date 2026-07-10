@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useEffect } from "react";
+import { Platform } from "react-native";
 
 export default function POS() {
   const [productName, setProductName] = useState("");
@@ -26,6 +28,35 @@ export default function POS() {
       quantity: number;
     }[]
   >([]);
+  useEffect(() => {
+    if (Platform.OS === "web") {
+      const navEntries = performance.getEntriesByType(
+        "navigation",
+      ) as PerformanceNavigationTiming[];
+
+      if (navEntries[0]?.type === "reload") {
+        router.replace("/");
+      }
+    }
+  }, []);
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const saved = await AsyncStorage.getItem("products");
+
+        if (saved) {
+          setProducts(JSON.parse(saved));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    loadProducts();
+  }, []);
+  useEffect(() => {
+    AsyncStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
   const saveHistory = async () => {
     const purchase = {
       id: Date.now().toString(),
@@ -316,6 +347,8 @@ export default function POS() {
                   await saveHistory();
 
                   setProducts([]);
+                  await AsyncStorage.removeItem("products");
+
                   setCash("");
                   setShowReceipt(false);
                 }}
