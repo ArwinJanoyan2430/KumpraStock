@@ -149,9 +149,11 @@ export default function POS() {
 
         <TextInput
           style={[styles.input, styles.quantityInput]}
-          placeholder="Qty"
-          keyboardType="numeric"
+          placeholder="Quantity"
+          keyboardType="number-pad"
           value={quantity}
+          textAlign="center"
+          maxLength={3}
           onChangeText={(text) => setQuantity(text.replace(/[^0-9]/g, ""))}
         />
       </View>
@@ -401,17 +403,16 @@ const styles = StyleSheet.create({
 
   inputRow: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginVertical: 10,
+    gap: 12,
+    marginVertical: 12,
   },
 
   priceInput: {
-    flex: 2,
+    flex: 1,
   },
 
   quantityInput: {
-    flex: 1,
+    width: 100,
   },
 
   addButton: {
