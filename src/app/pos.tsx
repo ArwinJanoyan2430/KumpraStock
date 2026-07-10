@@ -149,7 +149,7 @@ export default function POS() {
 
         <TextInput
           style={[styles.input, styles.quantityInput]}
-          placeholder="Quantity"
+          placeholder="Qty"
           keyboardType="number-pad"
           value={quantity}
           textAlign="center"
