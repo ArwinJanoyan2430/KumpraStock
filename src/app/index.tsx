@@ -23,32 +23,41 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#2563EB" />
 
-      <View style={styles.content}>
-        <View style={styles.logoContainer}>
-          <Image source={require("../../assets/asd.png")} style={styles.logo} />
+      <View style={styles.card}>
+        <Image source={require("../../assets/asd.png")} style={styles.logo} />
+
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>v1.0</Text>
         </View>
 
         <Text style={styles.title}>KumpraStock</Text>
 
-        <Text style={styles.tagline}>Smart Grocery Purchase Tracker</Text>
+        <Text style={styles.subtitle}>Smart Grocery Purchase Calculator</Text>
 
-        <Text style={styles.subtitle}>
-          Organize every grocery purchase, monitor expenses, and keep accurate
-          records for your sari-sari store—all in one simple app.
+        <Text style={styles.description}>
+          Add grocery items, enter their prices and quantities, and instantly
+          calculate your total spending to stay within your budget.
         </Text>
 
         <TouchableOpacity
-          style={styles.button}
-          activeOpacity={0.9}
+          style={styles.primaryButton}
+          activeOpacity={0.85}
           onPress={() => router.push("/pos")}
         >
-          <Text style={styles.buttonText}>Get Started</Text>
+          <Text style={styles.primaryText}>Start Shopping</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.secondaryButton}
+          activeOpacity={0.85}
+          onPress={() => router.push("/history")}
+        >
+          <Text style={styles.secondaryText}>Purchase History</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.footerContainer}>
-        <Text style={styles.credit}>Made by Arwin Janoyan</Text>
-        <Text style={styles.footer}>KUMPRASTOCK • Version 1.0</Text>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Developed by Arwin Janoyan</Text>
       </View>
     </View>
   );
@@ -60,87 +69,107 @@ const styles = StyleSheet.create({
     backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 30,
+    padding: 24,
   },
 
-  content: {
+  card: {
     width: "100%",
-    alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderRadius: 28,
-    paddingVertical: 40,
-    paddingHorizontal: 24,
-  },
-
-  logoContainer: {
-    width: 250,
-    height: 200,
-    borderRadius: 80,
+    maxWidth: 380,
     backgroundColor: "#FFFFFF",
-    justifyContent: "center",
+    borderRadius: 30,
+    paddingVertical: 40,
+    paddingHorizontal: 28,
     alignItems: "center",
-    marginBottom: 24,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    elevation: 12,
   },
 
   logo: {
-    width: 200,
-    height: 200,
+    width: 170,
+    height: 170,
     resizeMode: "contain",
   },
 
-  title: {
-    fontSize: 36,
-    fontWeight: "900",
-    color: "#FFFFFF",
-    letterSpacing: 1,
+  badge: {
+    marginTop: 10,
+    backgroundColor: "#DBEAFE",
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
 
-  tagline: {
-    marginTop: 8,
-    fontSize: 17,
-    color: "#BFDBFE",
-    fontWeight: "600",
+  badgeText: {
+    color: "#2563EB",
+    fontWeight: "700",
+  },
+
+  title: {
+    marginTop: 18,
+    fontSize: 36,
+    fontWeight: "900",
+    color: "#111827",
   },
 
   subtitle: {
-    marginTop: 20,
-    color: "#E5F0FF",
-    fontSize: 16,
-    textAlign: "center",
-    lineHeight: 26,
-    maxWidth: 320,
+    marginTop: 8,
+    fontSize: 18,
+    color: "#2563EB",
+    fontWeight: "700",
   },
 
-  button: {
+  description: {
+    marginTop: 18,
+    textAlign: "center",
+    color: "#6B7280",
+    lineHeight: 24,
+    fontSize: 15,
+  },
+
+  primaryButton: {
     marginTop: 35,
     width: "100%",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 17,
+    backgroundColor: "#2563EB",
     borderRadius: 16,
+    paddingVertical: 16,
     alignItems: "center",
-    elevation: 6,
   },
 
-  buttonText: {
-    color: "#2563EB",
+  primaryText: {
+    color: "#FFF",
     fontSize: 18,
     fontWeight: "700",
   },
 
-  footerContainer: {
-    position: "absolute",
-    bottom: 25,
+  secondaryButton: {
+    marginTop: 14,
+    width: "100%",
+    borderWidth: 1.5,
+    borderColor: "#2563EB",
+    borderRadius: 16,
+    paddingVertical: 16,
     alignItems: "center",
   },
 
-  credit: {
-    color: "#DBEAFE",
-    fontSize: 14,
+  secondaryText: {
+    color: "#2563EB",
+    fontWeight: "700",
+    fontSize: 17,
   },
 
   footer: {
-    color: "#BFDBFE",
-    fontSize: 12,
-    marginTop: 2,
+    position: "absolute",
+    bottom: 30,
+  },
+
+  footerText: {
+    color: "#DBEAFE",
+    fontSize: 14,
   },
 });
