@@ -5,9 +5,11 @@ import {
   StyleSheet,
   StatusBar,
   Image,
+  Platform,
 } from "react-native";
 import { router } from "expo-router";
 import { useEffect } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   useEffect(() => {
@@ -24,7 +26,11 @@ export default function HomeScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#2563EB" />
 
       <View style={styles.card}>
-        <Image source={require("../../assets/asd.png")} style={styles.logo} />
+        <Image
+          source={require("../../assets/asd.png")}
+          resizeMode="contain"
+          style={styles.logo}
+        />
 
         <View style={styles.badge}>
           <Text style={styles.badgeText}>v1.0</Text>
@@ -44,6 +50,7 @@ export default function HomeScreen() {
           activeOpacity={0.85}
           onPress={() => router.push("/pos")}
         >
+          <MaterialIcons name="shopping-cart" size={22} color="white" />
           <Text style={styles.primaryText}>Start Shopping</Text>
         </TouchableOpacity>
 
@@ -56,9 +63,7 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Developed by Arwin Janoyan</Text>
-      </View>
+      <Text style={styles.footerText}>© 2026 Arwin Janoyan</Text>
     </View>
   );
 }
@@ -81,20 +86,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     alignItems: "center",
 
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 20,
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    elevation: 12,
+    ...(Platform.OS === "web"
+      ? {
+          boxShadow: "0px 12px 30px rgba(0,0,0,0.15)",
+        }
+      : {
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 12,
+          },
+          shadowOpacity: 0.15,
+          shadowRadius: 20,
+          elevation: 12,
+        }),
   },
 
   logo: {
     width: 170,
     height: 170,
-    resizeMode: "contain",
   },
 
   badge: {
@@ -139,6 +149,9 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 16,
     alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 8,
   },
 
   primaryText: {
